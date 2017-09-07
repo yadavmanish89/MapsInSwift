@@ -13,7 +13,7 @@
         <scene sceneID="Nos-Ww-mHl">
             <objects>
                 <navigationController id="6Cp-8q-giL" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="itM-tf-yVz">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="itM-tf-yVz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -36,32 +36,11 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YKV-a7-YXh">
-                                <rect key="frame" x="40" y="201" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="buttonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JBD-D4-7B0"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="oO7-Ap-l1Q">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="sOS-kE-71R">
-                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="TAc-p9-wYQ">
-                                <rect key="frame" x="249" y="7" width="110" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Apple"/>
-                                    <segment title="Google"/>
-                                </segments>
-                            </segmentedControl>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="oO7-Ap-l1Q"/>
                     <connections>
-                        <outlet property="searchBar" destination="7db-cq-eZ4" id="j84-Yy-eHa"/>
+                        <outlet property="searchBar" destination="7db-cq-eZ4" id="7JG-p4-ReH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -69,6 +48,9 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="BYZ-38-t0r" id="Opv-hh-T6W"/>
+                    </connections>
                 </searchBar>
             </objects>
             <point key="canvasLocation" x="-462" y="107"/>

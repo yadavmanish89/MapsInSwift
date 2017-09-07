@@ -8,34 +8,93 @@
 
 import UIKit
 import GoogleMaps
-class ViewController: UIViewController {
+import GooglePlaces
+class ViewController: UIViewController, UISearchBarDelegate, GMSAutocompleteViewControllerDelegate {
 
     @IBOutlet var searchBar: UISearchBar!
+    var acController:GMSAutocompleteViewController?
+    var mapView: GMSMapView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.titleView = self.searchBar
-        
-        let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
-        let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-        view = mapView
+        loadMap()
+        var name:String? = nil
+        initAutocompleteVC()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        present(acController!, animated: false, completion: nil)
+    }
+    
+    func initAutocompleteVC() {
+        acController = GMSAutocompleteViewController()
+        acController?.delegate = self
+    }
+    
+    //MARK: PlaceAutoCompleteDelegate
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        dismiss(animated: true, completion: {
+            self.markSelectedPlace(selectedPlace: place)
+        })
+    }
 
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("Error: \(error)")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // User cancelled the operation.
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        print("Autocomplete was cancelled.")
+        dismiss(animated: true, completion: nil)
+    }
+
+    
+    func markSelectedPlace(selectedPlace:GMSPlace) {
+        let marker = GMSMarker.init(position: selectedPlace.coordinate)
+        marker.title = selectedPlace.placeID
+        let cameraPosition = GMSCameraPosition.camera(withTarget: selectedPlace.coordinate, zoom: 15.0)
+        mapView?.animate(to: cameraPosition)
+    }
+    
+    func loadMap() {
+        let camera = GMSCameraPosition.camera(withLatitude: 40.8042, longitude: -74.0120, zoom: 15.0)
+        mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        view = mapView
         
         let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
+        marker.position = CLLocationCoordinate2D(latitude: 40.8042, longitude: -74.0120)
+        marker.title = "North Bergen"
+        marker.snippet = "United States"
         marker.map = mapView
     }
-    @IBAction func buttonAction(_ sender: UIButton) {
-        print("Tapped")
-    }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
+
+//extension ViewController: GMSAutocompleteViewControllerDelegate {
+//    
+//    // Handle the user's selection.
+//    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+//        placeSelected = place
+//        dismiss(animated: true, completion: nil)
+//    }
+//    
+//    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+//        print("Error: \(error)")
+//        dismiss(animated: true, completion: nil)
+//    }
+//    
+//    // User cancelled the operation.
+//    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+//        print("Autocomplete was cancelled.")
+//        dismiss(animated: true, completion: nil)
+//    }
+//}
+
 
